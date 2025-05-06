@@ -9,16 +9,17 @@ export default async function handler(req, res) {
     return res.status(400).json({ error: 'Liste invalide' });
   }
 
-  const prompt = \`Tu es un assistant chargé d’optimiser des interventions. Priorise-les intelligemment en tenant compte de l’urgence, du lieu, de la météo, des vacances scolaires et du nombre d’agents (\${agents}/jour).
+  const prompt = `Tu es un assistant charge d'optimiser des interventions. Priorise-les intelligemment en tenant compte de l'urgence, du lieu, de la meteo, des vacances scolaires et du nombre d'agents (${agents}/jour).
 
-\` + interventions.map((i, idx) => (
-    \`Intervention \${idx + 1}:
-- Lieu: \${i.lieu}
-- Urgence: \${i.urgence}
-- Type: \${i.type}
-- Description: \${i.description}
-\`
-  )).join('\n');
+` +
+    interventions.map((i, idx) => (
+      `Intervention ${idx + 1}:
+- Lieu: ${i.lieu}
+- Urgence: ${i.urgence}
+- Type: ${i.type}
+- Description: ${i.description}
+`
+    )).join('\n');
 
   try {
     const completion = await openai.chat.completions.create({
